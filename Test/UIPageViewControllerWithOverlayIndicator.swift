@@ -8,14 +8,14 @@
 
 import UIKit
 
-class UIPageViewControllerWithStaticPageControl: UIPageViewController {
+class PageViewControllerWithStaticPageControl: UIPageViewController {
 
     var pageControl = UIPageControl()
 
     private lazy var orderedViewControllers: [UIViewController?] = {
         return [newColoredViewController(withIdentifier: "PageView", color: .red),
-        newColoredViewController(withIdentifier: "PageView", color: .green),
-        newColoredViewController(withIdentifier: "PageView", color: .blue)]
+                newColoredViewController(withIdentifier: "PageView", color: .green),
+                newColoredViewController(withIdentifier: "PageView", color: .blue)]
     }()
 
     override func viewDidLoad() {
@@ -34,8 +34,9 @@ class UIPageViewControllerWithStaticPageControl: UIPageViewController {
     }
 
     func configurePageControl() {
-        // The total number of pages that are available is based on how many available colors we have.
-        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
+
+        pageControl = UIPageControl(frame: CGRect(x: 0, y: UIScreen.main.bounds.maxY - 50,
+                                                   width: UIScreen.main.bounds.width, height: 50))
         self.pageControl.numberOfPages = orderedViewControllers.count
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = UIColor.black
@@ -44,9 +45,11 @@ class UIPageViewControllerWithStaticPageControl: UIPageViewController {
         self.view.addSubview(pageControl)
     }
 
-    private func newColoredViewController(withIdentifier storyboardId: String, color: UIColor) -> StaticPageControlViewController? {
+    private func newColoredViewController(withIdentifier storyboardId: String,
+                                          color: UIColor) -> StaticPageControlViewController? {
 
-        guard let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: storyboardId) as? StaticPageControlViewController
+        guard let viewController = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: storyboardId) as? StaticPageControlViewController
             else { return nil }
 
         viewController.color = color
@@ -54,16 +57,11 @@ class UIPageViewControllerWithStaticPageControl: UIPageViewController {
         return viewController
     }
 
-    // MARK: Delegate functions
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        let pageContentViewController = pageViewController.viewControllers![0]
-        self.pageControl.currentPage = orderedViewControllers.index(of: pageContentViewController)!
-    }
-
 }
 
-extension UIPageViewControllerWithStaticPageControl: UIPageViewControllerDataSource {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+extension PageViewControllerWithStaticPageControl: UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            viewControllerBefore viewController: UIViewController) -> UIViewController? {
 
         guard var currentIndex = orderedViewControllers.index(of: viewController) else { return nil }
 
@@ -76,7 +74,8 @@ extension UIPageViewControllerWithStaticPageControl: UIPageViewControllerDataSou
         return orderedViewControllers[currentIndex]
     }
 
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            viewControllerAfter viewController: UIViewController) -> UIViewController? {
 
         guard var currentIndex = orderedViewControllers.index(of: viewController) else { return nil }
 
@@ -90,8 +89,15 @@ extension UIPageViewControllerWithStaticPageControl: UIPageViewControllerDataSou
     }
 }
 
-extension UIPageViewControllerWithStaticPageControl: UIPageViewControllerDelegate {
-//    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-//        return viewColors.count
-//    }
+// MARK: - UIPageViewControllerDelegate Methods
+extension PageViewControllerWithStaticPageControl: UIPageViewControllerDelegate {
+
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
+
+        let pageContentViewController = pageViewController.viewControllers![0]
+        self.pageControl.currentPage = orderedViewControllers.index(of: pageContentViewController)!
+    }
 }
