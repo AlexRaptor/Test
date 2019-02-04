@@ -18,11 +18,16 @@ class ImageWarpSKViewController: UIViewController {
     var sprite: SKSpriteNode!
 
     enum PinTypes: Int {
-        case topLeft, topRight, bottomRight, bottomLeft
+        case bottomLeft, bottomRight, topLeft, topRight
     }
 
     var pins: [SKNode] = []
+    var sourcePinPositions: [CGPoint] = []
+    let sourcePositions: [float2] = [float2(0, 0), float2(1, 0), float2(0, 1), float2(1, 1)]
+    var destinationPositions: [float2] = [float2(0, 0), float2(1, 0), float2(0, 1), float2(1, 1)]
+
     var touchedPin: SKNode?
+    var indexOfTouchedPin: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +63,11 @@ class ImageWarpSKViewController: UIViewController {
 
             let touchLocation = recognizer.location(in: recognizer.view)
             let skTouchLocation = CGPoint(x: touchLocation.x, y: recognizer.view!.bounds.height - touchLocation.y)
-            
-            touchedPin = scene.nodes(at: skTouchLocation).filter({ self.pins.contains($0) }).first
+
+            guard let touchedPin = scene.nodes(at: skTouchLocation).filter({ self.pins.contains($0) }).first else { break }
+
+            self.touchedPin = touchedPin
+            indexOfTouchedPin = pins.firstIndex(of: touchedPin)
 
         case .ended:
 
@@ -70,14 +78,64 @@ class ImageWarpSKViewController: UIViewController {
             touchedPin.position = CGPoint(x: touchedPin.position.x + translation.x,
                                           y: touchedPin.position.y - translation.y)
             self.touchedPin = nil
+            self.indexOfTouchedPin = nil
+
+            warpImage()
 
         case .changed:
 
-            guard let touchedPin = self.touchedPin else { break }
+            guard let touchedPin = self.touchedPin,
+                let indexOfTouchedPin = self.indexOfTouchedPin
+                else { break }
+
             let translation = recognizer.translation(in: self.view)
 
             touchedPin.position = CGPoint(x: touchedPin.position.x + translation.x,
                                           y: touchedPin.position.y - translation.y)
+
+            var dx: CGFloat = 0
+            var dy: CGFloat = 0
+
+            switch indexOfTouchedPin {
+
+            case PinTypes.bottomLeft.rawValue:
+
+                dx = (touchedPin.position.x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
+                    / (sourcePinPositions[PinTypes.bottomRight.rawValue].x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
+
+                dy = (touchedPin.position.y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
+                    / (sourcePinPositions[PinTypes.topLeft.rawValue].y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
+
+            case PinTypes.bottomRight.rawValue:
+
+                dx = 1 + (touchedPin.position.x - sourcePinPositions[PinTypes.bottomRight.rawValue].x)
+                    / (sourcePinPositions[PinTypes.bottomRight.rawValue].x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
+
+                dy = (touchedPin.position.y - sourcePinPositions[PinTypes.bottomRight.rawValue].y)
+                    / (sourcePinPositions[PinTypes.topRight.rawValue].y - sourcePinPositions[PinTypes.bottomRight.rawValue].y)
+
+            case PinTypes.topLeft.rawValue:
+
+                dx = (touchedPin.position.x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
+                    / (sourcePinPositions[PinTypes.topRight.rawValue].x - sourcePinPositions[PinTypes.topLeft.rawValue].x)
+
+                dy = 1 + (touchedPin.position.y - sourcePinPositions[PinTypes.topLeft.rawValue].y)
+                    / (sourcePinPositions[PinTypes.topLeft.rawValue].y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
+
+            case PinTypes.topRight.rawValue:
+
+                dx = 1 + (touchedPin.position.x - sourcePinPositions[PinTypes.topRight.rawValue].x)
+                    / (sourcePinPositions[PinTypes.topRight.rawValue].x - sourcePinPositions[PinTypes.topLeft.rawValue].x)
+
+                dy = 1 + (touchedPin.position.y - sourcePinPositions[PinTypes.topRight.rawValue].y)
+                    / (sourcePinPositions[PinTypes.topRight.rawValue].y - sourcePinPositions[PinTypes.bottomRight.rawValue].y)
+
+            default:
+                break
+            }
+
+            destinationPositions[indexOfTouchedPin] = float2(Float(dx), Float(dy))
+            //            warpImage()
 
         default:
             break
@@ -94,37 +152,41 @@ class ImageWarpSKViewController: UIViewController {
 
     private func configurePins() {
 
-        let topLeftPin = SKShapeNode(circleOfRadius: 10)
-        topLeftPin.name = "topLeftPin"
-        topLeftPin.fillColor = .red
-        topLeftPin.position = CGPoint(x: sprite.position.x - sprite.size.width / 2 - PIN_OFFSET,
-                                      y: sprite.position.y + sprite.size.height / 2 + PIN_OFFSET)
-        pins.insert(topLeftPin, at: PinTypes.topLeft.rawValue)
-        scene.addChild(topLeftPin)
+        var pin = SKShapeNode(circleOfRadius: 10)
+        pin.name = "bottomLeftPin"
+        pin.fillColor = .yellow
+        pin.position = CGPoint(x: sprite.position.x - sprite.size.width / 2 - PIN_OFFSET,
+                               y: sprite.position.y - sprite.size.height / 2 - PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.bottomLeft.rawValue)
+        sourcePinPositions.insert(pin.position, at: PinTypes.bottomLeft.rawValue)
+        scene.addChild(pin)
 
-        let topRightPin = SKShapeNode(circleOfRadius: 10)
-        topRightPin.name = "topRightPin"
-        topRightPin.fillColor = .green
-        topRightPin.position = CGPoint(x: sprite.position.x + sprite.size.width / 2 + PIN_OFFSET,
-                                       y: sprite.position.y + sprite.size.height / 2 + PIN_OFFSET)
-        pins.insert(topRightPin, at: PinTypes.topRight.rawValue)
-        scene.addChild(topRightPin)
+        pin = SKShapeNode(circleOfRadius: 10)
+        pin.name = "bottomRightPin"
+        pin.fillColor = .blue
+        pin.position = CGPoint(x: sprite.position.x + sprite.size.width / 2 + PIN_OFFSET,
+                               y: sprite.position.y - sprite.size.height / 2 - PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.bottomRight.rawValue)
+        sourcePinPositions.insert(pin.position, at: PinTypes.bottomRight.rawValue)
+        scene.addChild(pin)
 
-        let bottomRightPin = SKShapeNode(circleOfRadius: 10)
-        bottomRightPin.name = "bottomRightPin"
-        bottomRightPin.fillColor = .blue
-        bottomRightPin.position = CGPoint(x: sprite.position.x + sprite.size.width / 2 + PIN_OFFSET,
-                                          y: sprite.position.y - sprite.size.height / 2 - PIN_OFFSET)
-        pins.insert(bottomRightPin, at: PinTypes.bottomRight.rawValue)
-        scene.addChild(bottomRightPin)
+        pin = SKShapeNode(circleOfRadius: 10)
+        pin.name = "topLeftPin"
+        pin.fillColor = .red
+        pin.position = CGPoint(x: sprite.position.x - sprite.size.width / 2 - PIN_OFFSET,
+                               y: sprite.position.y + sprite.size.height / 2 + PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.topLeft.rawValue)
+        sourcePinPositions.insert(pin.position, at: PinTypes.topLeft.rawValue)
+        scene.addChild(pin)
 
-        let bottomLeftPin = SKShapeNode(circleOfRadius: 10)
-        bottomLeftPin.name = "bottomLeftPin"
-        bottomLeftPin.fillColor = .yellow
-        bottomLeftPin.position = CGPoint(x: sprite.position.x - sprite.size.width / 2 - PIN_OFFSET,
-                                         y: sprite.position.y - sprite.size.height / 2 - PIN_OFFSET)
-        pins.insert(bottomLeftPin, at: PinTypes.bottomLeft.rawValue)
-        scene.addChild(bottomLeftPin)
+        pin = SKShapeNode(circleOfRadius: 10)
+        pin.name = "topRightPin"
+        pin.fillColor = .green
+        pin.position = CGPoint(x: sprite.position.x + sprite.size.width / 2 + PIN_OFFSET,
+                               y: sprite.position.y + sprite.size.height / 2 + PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.topRight.rawValue)
+        sourcePinPositions.insert(pin.position, at: PinTypes.topRight.rawValue)
+        scene.addChild(pin)
     }
 
     private func addSprite(imageNamed: String) {
@@ -138,5 +200,14 @@ class ImageWarpSKViewController: UIViewController {
         sprite.position = center
 
         scene.addChild(sprite)
+    }
+
+    private func warpImage() {
+
+        let warpGrid = SKWarpGeometryGrid(columns: 1, rows: 1, sourcePositions: sourcePositions, destinationPositions: destinationPositions)
+
+        guard let action = SKAction.warp(to: warpGrid, duration: 0) else { return }
+
+        sprite.run(action)
     }
 }
