@@ -14,6 +14,11 @@ class ImageWarpSKViewController: UIViewController {
     let SPRITE_SIZE = CGSize(width: 200, height: 200) // swiftlint:disable:this identifier_name
     let PIN_OFFSET: CGFloat = 10 // swiftlint:disable:this identifier_name
 
+    lazy var sourceSizeX: CGFloat =
+        (sourcePinPositions[PinTypes.bottomRight.rawValue].x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
+    lazy var sourceSizeY: CGFloat =
+        (sourcePinPositions[PinTypes.topLeft.rawValue].y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
+
     var scene: SKScene!
     var sprite: SKSpriteNode!
 
@@ -55,6 +60,44 @@ class ImageWarpSKViewController: UIViewController {
 
     }
 
+    fileprivate func recalculateDestinationPositions(_ indexOfTouchedPin: Int, _ touchedPin: SKNode) {
+
+        var destX: CGFloat = 0
+        var destY: CGFloat = 0
+
+        switch indexOfTouchedPin {
+
+        case PinTypes.bottomLeft.rawValue:
+
+            destX = (touchedPin.position.x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x) / sourceSizeX
+
+            destY = (touchedPin.position.y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y) / sourceSizeY
+
+        case PinTypes.bottomRight.rawValue:
+
+            destX = 1 + (touchedPin.position.x - sourcePinPositions[PinTypes.bottomRight.rawValue].x) / sourceSizeX
+
+            destY = (touchedPin.position.y - sourcePinPositions[PinTypes.bottomRight.rawValue].y) / sourceSizeY
+
+        case PinTypes.topLeft.rawValue:
+
+            destX = (touchedPin.position.x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x) / sourceSizeX
+
+            destY = 1 + (touchedPin.position.y - sourcePinPositions[PinTypes.topLeft.rawValue].y) / sourceSizeY
+
+        case PinTypes.topRight.rawValue:
+
+            destX = 1 + (touchedPin.position.x - sourcePinPositions[PinTypes.topRight.rawValue].x) / sourceSizeX
+
+            destY = 1 + (touchedPin.position.y - sourcePinPositions[PinTypes.topRight.rawValue].y) / sourceSizeY
+
+        default:
+            break
+        }
+
+        destinationPositions[indexOfTouchedPin] = float2(Float(destX), Float(destY))
+    }
+
     @objc func handlePan(recognizer: UIPanGestureRecognizer) {
 
         switch recognizer.state {
@@ -64,7 +107,8 @@ class ImageWarpSKViewController: UIViewController {
             let touchLocation = recognizer.location(in: recognizer.view)
             let skTouchLocation = CGPoint(x: touchLocation.x, y: recognizer.view!.bounds.height - touchLocation.y)
 
-            guard let touchedPin = scene.nodes(at: skTouchLocation).filter({ self.pins.contains($0) }).first else { break }
+            guard let touchedPin = scene.nodes(at: skTouchLocation).filter({ self.pins.contains($0) }).first
+                else { break }
 
             self.touchedPin = touchedPin
             indexOfTouchedPin = pins.firstIndex(of: touchedPin)
@@ -80,8 +124,6 @@ class ImageWarpSKViewController: UIViewController {
             self.touchedPin = nil
             self.indexOfTouchedPin = nil
 
-            warpImage()
-
         case .changed:
 
             guard let touchedPin = self.touchedPin,
@@ -93,49 +135,9 @@ class ImageWarpSKViewController: UIViewController {
             touchedPin.position = CGPoint(x: touchedPin.position.x + translation.x,
                                           y: touchedPin.position.y - translation.y)
 
-            var dx: CGFloat = 0
-            var dy: CGFloat = 0
+            recalculateDestinationPositions(indexOfTouchedPin, touchedPin)
 
-            switch indexOfTouchedPin {
-
-            case PinTypes.bottomLeft.rawValue:
-
-                dx = (touchedPin.position.x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
-                    / (sourcePinPositions[PinTypes.bottomRight.rawValue].x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
-
-                dy = (touchedPin.position.y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
-                    / (sourcePinPositions[PinTypes.topLeft.rawValue].y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
-
-            case PinTypes.bottomRight.rawValue:
-
-                dx = 1 + (touchedPin.position.x - sourcePinPositions[PinTypes.bottomRight.rawValue].x)
-                    / (sourcePinPositions[PinTypes.bottomRight.rawValue].x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
-
-                dy = (touchedPin.position.y - sourcePinPositions[PinTypes.bottomRight.rawValue].y)
-                    / (sourcePinPositions[PinTypes.topRight.rawValue].y - sourcePinPositions[PinTypes.bottomRight.rawValue].y)
-
-            case PinTypes.topLeft.rawValue:
-
-                dx = (touchedPin.position.x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
-                    / (sourcePinPositions[PinTypes.topRight.rawValue].x - sourcePinPositions[PinTypes.topLeft.rawValue].x)
-
-                dy = 1 + (touchedPin.position.y - sourcePinPositions[PinTypes.topLeft.rawValue].y)
-                    / (sourcePinPositions[PinTypes.topLeft.rawValue].y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
-
-            case PinTypes.topRight.rawValue:
-
-                dx = 1 + (touchedPin.position.x - sourcePinPositions[PinTypes.topRight.rawValue].x)
-                    / (sourcePinPositions[PinTypes.topRight.rawValue].x - sourcePinPositions[PinTypes.topLeft.rawValue].x)
-
-                dy = 1 + (touchedPin.position.y - sourcePinPositions[PinTypes.topRight.rawValue].y)
-                    / (sourcePinPositions[PinTypes.topRight.rawValue].y - sourcePinPositions[PinTypes.bottomRight.rawValue].y)
-
-            default:
-                break
-            }
-
-            destinationPositions[indexOfTouchedPin] = float2(Float(dx), Float(dy))
-            //            warpImage()
+            warpImage()
 
         default:
             break
@@ -204,7 +206,10 @@ class ImageWarpSKViewController: UIViewController {
 
     private func warpImage() {
 
-        let warpGrid = SKWarpGeometryGrid(columns: 1, rows: 1, sourcePositions: sourcePositions, destinationPositions: destinationPositions)
+        let warpGrid = SKWarpGeometryGrid(columns: 1,
+                                          rows: 1,
+                                          sourcePositions: sourcePositions,
+                                          destinationPositions: destinationPositions)
 
         guard let action = SKAction.warp(to: warpGrid, duration: 0) else { return }
 
