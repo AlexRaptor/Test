@@ -100,40 +100,21 @@ class ImageWarpSKViewController: UIViewController {
 
     @objc func handlePan(recognizer: UIPanGestureRecognizer) {
 
-        print("pan")
-
         switch recognizer.state {
 
         case .began:
-print("began")
+
             let touchLocation = recognizer.location(in: recognizer.view)
             let skTouchLocation = CGPoint(x: touchLocation.x, y: recognizer.view!.bounds.height - touchLocation.y)
 
             guard let touchedPin = scene.nodes(at: skTouchLocation).filter({ self.pins.contains($0) }).first
-                else {
-
-                    print("touchLocation: \(touchLocation)")
-                    print("skTouchLocation: \(skTouchLocation)")
-
-                    for pin in pins {
-                        print("\(pin.name): \(pin.position)")
-                    }
-
-                    break
-
-}
+                else { break }
 
             self.touchedPin = touchedPin
             indexOfTouchedPin = pins.firstIndex(of: touchedPin)
 
-if indexOfTouchedPin == nil {
-print("NIL")
-} else {
-print("indexOfTouchedPin: \(indexOfTouchedPin)")
-            }
-
         case .ended:
-print("ended")
+
             guard let touchedPin = self.touchedPin else { break }
 
             let translation = recognizer.translation(in: self.view)
@@ -142,9 +123,9 @@ print("ended")
                                           y: touchedPin.position.y - translation.y)
             self.touchedPin = nil
             self.indexOfTouchedPin = nil
-print("\n\n\n")
+
         case .changed:
-//print("changed")
+
             guard let touchedPin = self.touchedPin,
                 let indexOfTouchedPin = self.indexOfTouchedPin
                 else { break }
@@ -158,9 +139,7 @@ print("\n\n\n")
 
             warpImage()
 
-        default:
-print("default")
-            break
+        default: break
         }
 
         recognizer.setTranslation(CGPoint.zero, in: self.view)

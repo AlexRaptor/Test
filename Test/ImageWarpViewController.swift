@@ -88,10 +88,19 @@ class ImageWarpViewController: UIViewController {
 
         imageView.frame = CGRect(origin: minMax.min, size: newSize)
 
-        let filterBottomLeft = CGPoint(x: bottomLeft.x, y: imageBottom - bottomLeft.y)
-        let filterBottomRight = CGPoint(x: bottomRight.x, y: imageBottom - bottomRight.y)
-        let filterTopLeft = CGPoint(x: topLeft.x, y: imageBottom - topLeft.y)
-        let filterTopRight = CGPoint(x: topRight.x, y: imageBottom - topRight.y)
+        var filterBottomLeft = CGPoint(x: bottomLeft.x, y: imageBottom - bottomLeft.y)
+        var filterBottomRight = CGPoint(x: bottomRight.x, y: imageBottom - bottomRight.y)
+        var filterTopLeft = CGPoint(x: topLeft.x, y: imageBottom - topLeft.y)
+        var filterTopRight = CGPoint(x: topRight.x, y: imageBottom - topRight.y)
+
+        // swiftlint:disable:next line_length
+        guard let filterMinMax = getMinAndMaxPoints(points: filterBottomLeft, filterBottomRight, filterTopLeft, filterTopRight)
+            else { return }
+
+        filterBottomLeft -= filterMinMax.min
+        filterBottomRight -= filterMinMax.min
+        filterTopLeft -= filterMinMax.min
+        filterTopRight -= filterMinMax.min
 
         perspectiveTransform.setValue(CIVector(cgPoint: filterBottomLeft), forKey: "inputBottomLeft")
         perspectiveTransform.setValue(CIVector(cgPoint: filterBottomRight), forKey: "inputBottomRight")
@@ -122,59 +131,43 @@ class ImageWarpViewController: UIViewController {
         return (min: min, max: max)
     }
 
-    private func configureGestures(target: UIView) {
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
-        target.addGestureRecognizer(panGestureRecognizer)
-    }
-
     private func configurePins() {
 
-        //        let pinImage = UIImage(named: "scale")
+        func createPin(pinType: PinTypes, color: UIColor, center: CGPoint) {
 
-        let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+            // let pinImage = UIImage(named: "scale")
 
-        var pin = UIImageView(frame: frame)
-        pin.isUserInteractionEnabled = true
-        pin.layer.cornerRadius = pin.frame.height / 2
-        pin.layer.masksToBounds = true
-        pin.contentMode = .scaleAspectFit
-        pin.backgroundColor = .yellow
-        pin.center = CGPoint(x: imageView.frame.minX - PIN_OFFSET, y: imageView.frame.maxY + PIN_OFFSET)
-        pins.insert(pin, at: PinTypes.bottomLeft.rawValue)
-        view.addSubview(pin)
-        configureGestures(target: pin)
+            let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
 
-        pin = UIImageView(frame: frame)
-        pin.isUserInteractionEnabled = true
-        pin.layer.cornerRadius = pin.frame.height / 2
-        pin.layer.masksToBounds = true
-        pin.contentMode = .scaleAspectFit
-        pin.backgroundColor = .blue
-        pin.center = CGPoint(x: imageView.frame.maxX + PIN_OFFSET, y: imageView.frame.maxY + PIN_OFFSET)
-        pins.insert(pin, at: PinTypes.bottomRight.rawValue)
-        view.addSubview(pin)
-        configureGestures(target: pin)
+            let pin = UIImageView(frame: frame)
+            pin.isUserInteractionEnabled = true
+            pin.layer.cornerRadius = pin.frame.height / 2
+            pin.layer.masksToBounds = true
+            pin.contentMode = .scaleAspectFit
+            pin.backgroundColor = color
+            pin.center = center
+            pins.insert(pin, at: pinType.rawValue)
 
-        pin = UIImageView(frame: frame)
-        pin.isUserInteractionEnabled = true
-        pin.layer.cornerRadius = pin.frame.height / 2
-        pin.layer.masksToBounds = true
-        pin.contentMode = .scaleAspectFit
-        pin.backgroundColor = .red
-        pin.center = CGPoint(x: imageView.frame.minX - PIN_OFFSET, y: imageView.frame.minY - PIN_OFFSET)
-        pins.insert(pin, at: PinTypes.topLeft.rawValue)
-        view.addSubview(pin)
-        configureGestures(target: pin)
+            view.addSubview(pin)
 
-        pin = UIImageView(frame: frame)
-        pin.isUserInteractionEnabled = true
-        pin.layer.cornerRadius = pin.frame.height / 2
-        pin.layer.masksToBounds = true
-        pin.contentMode = .scaleAspectFit
-        pin.backgroundColor = .green
-        pin.center = CGPoint(x: imageView.frame.maxX + PIN_OFFSET, y: imageView.frame.minY - PIN_OFFSET)
-        pins.insert(pin, at: PinTypes.topRight.rawValue)
-        view.addSubview(pin)
-        configureGestures(target: pin)
+            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+            pin.addGestureRecognizer(panGestureRecognizer)
+        }
+
+        createPin(pinType: .bottomLeft,
+                  color: .yellow,
+                  center: CGPoint(x: imageView.frame.minX - PIN_OFFSET, y: imageView.frame.maxY + PIN_OFFSET))
+
+        createPin(pinType: .bottomRight,
+                  color: .blue,
+                  center: CGPoint(x: imageView.frame.maxX + PIN_OFFSET, y: imageView.frame.maxY + PIN_OFFSET))
+
+        createPin(pinType: .topLeft,
+                  color: .red,
+                  center: CGPoint(x: imageView.frame.minX - PIN_OFFSET, y: imageView.frame.minY - PIN_OFFSET))
+
+        createPin(pinType: .topRight,
+                  color: .green,
+                  center: CGPoint(x: imageView.frame.maxX + PIN_OFFSET, y: imageView.frame.minY - PIN_OFFSET))
     }
 }
