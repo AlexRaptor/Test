@@ -12,24 +12,19 @@ class ImageWarpViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
 
-    var image: UIImage!
+    var ciImage: CIImage!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         guard let monaLisa = UIImage(named: "monalisa.jpg") else { fatalError("File \"monalisa.jpg\" not found") }
 
-        image = monaLisa
-        imageView.image = image
+        ciImage = CIImage(cgImage: monaLisa.cgImage!)
+
+        imageView.image = monaLisa
     }
 
     @IBAction func testButtonTapped(_ sender: UIButton) {
-
-        guard let ciImage = CIImage(image: self.image) else { return }
-
-//        let ciContext = CIContext()
-
-//        let rect = CIRectangleFeature
 
         guard let perspectiveTransform = CIFilter(name: "CIPerspectiveTransform")
             else { print("Filter not found"); return }
@@ -46,7 +41,7 @@ class ImageWarpViewController: UIViewController {
 
         perspectiveTransform.setValue(ciImage, forKey: kCIInputImageKey)
 
-        let newImage = perspectiveTransform.outputImage!
+        guard let newImage = perspectiveTransform.outputImage else { return }
 
         imageView.image = UIImage(ciImage: newImage)
 
