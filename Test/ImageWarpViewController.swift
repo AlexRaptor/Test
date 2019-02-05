@@ -12,18 +12,123 @@ class ImageWarpViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
 
+    let SPRITE_SIZE = CGSize(width: 200, height: 200) // swiftlint:disable:this identifier_name
+    let PIN_OFFSET: CGFloat = 10 // swiftlint:disable:this identifier_name
+
+//    lazy var sourceSizeX: CGFloat =
+//        (sourcePinPositions[PinTypes.bottomRight.rawValue].x - sourcePinPositions[PinTypes.bottomLeft.rawValue].x)
+//    lazy var sourceSizeY: CGFloat =
+//        (sourcePinPositions[PinTypes.topLeft.rawValue].y - sourcePinPositions[PinTypes.bottomLeft.rawValue].y)
+
+    enum PinTypes: Int {
+        case bottomLeft, bottomRight, topLeft, topRight
+    }
+
+    var pins: [UIImageView] = []
+//    var sourcePinPositions: [CGPoint] = []
+//    let sourcePositions: [float2] = [float2(0, 0), float2(1, 0), float2(0, 1), float2(1, 1)]
+//    var destinationPositions: [float2] = [float2(0, 0), float2(1, 0), float2(0, 1), float2(1, 1)]
+
+    var touchedPin: UIImageView?
+    var indexOfTouchedPin: Int?
+
     var ciImage: CIImage!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let monaLisa = UIImage(named: "monalisa.jpg") else { fatalError("File \"monalisa.jpg\" not found") }
+        view.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+
+        configureImage(named: "monalisa.jpg")
+
+        configurePins()
+    }
+
+    private func configureGestures() {
+
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
+        view.addGestureRecognizer(panGestureRecognizer)
+    }
+
+    @objc func handlePan(recognizer: UIPanGestureRecognizer) {
+
+        print("pan")
+
+        switch recognizer.state {
+
+        case .began:
+            print("began")
+            let touchLocation = recognizer.location(in: recognizer.view)
+//            let skTouchLocation = CGPoint(x: touchLocation.x, y: recognizer.view!.bounds.height - touchLocation.y)
+
+//            guard let touchedPin = view.subviews(at:)
+            nodes(at: skTouchLocation).filter({ self.pins.contains($0) }).first
+                else {
+
+                    print("touchLocation: \(touchLocation)")
+                    print("skTouchLocation: \(skTouchLocation)")
+
+                    for pin in pins {
+                        print("\(pin.name): \(pin.position)")
+                    }
+
+                    break
+
+            }
+
+            self.touchedPin = touchedPin
+            indexOfTouchedPin = pins.firstIndex(of: touchedPin)
+
+            if indexOfTouchedPin == nil {
+                print("NIL")
+            } else {
+                print("indexOfTouchedPin: \(indexOfTouchedPin)")
+            }
+
+        case .ended:
+            print("ended")
+            guard let touchedPin = self.touchedPin else { break }
+
+            let translation = recognizer.translation(in: self.view)
+
+            touchedPin.position = CGPoint(x: touchedPin.position.x + translation.x,
+                                          y: touchedPin.position.y - translation.y)
+            self.touchedPin = nil
+            self.indexOfTouchedPin = nil
+            print("\n\n\n")
+        case .changed:
+            //print("changed")
+            guard let touchedPin = self.touchedPin,
+                let indexOfTouchedPin = self.indexOfTouchedPin
+                else { break }
+
+            let translation = recognizer.translation(in: self.view)
+
+            touchedPin.position = CGPoint(x: touchedPin.position.x + translation.x,
+                                          y: touchedPin.position.y - translation.y)
+
+            recalculateDestinationPositions(indexOfTouchedPin, touchedPin)
+
+            warpImage()
+
+        default:
+            print("default")
+            break
+        }
+
+        recognizer.setTranslation(CGPoint.zero, in: self.view)
+    }
+
+    private func configureImage(named: String) {
+
+        guard let monaLisa = UIImage(named: named) else { fatalError("File \"\(named)\" not found") }
 
         ciImage = CIImage(cgImage: monaLisa.cgImage!)
 
-        imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+        imageView.frame = CGRect(x: 0, y: 0, width: SPRITE_SIZE.width, height: SPRITE_SIZE.height)
         imageView.center = imageView.superview?.center
             ?? CGPoint(x: UIScreen.main.bounds.maxX / 2, y: UIScreen.main.bounds.maxY / 2)
+
         imageView.contentMode = .scaleAspectFill
 
         imageView.backgroundColor = .gray
@@ -42,15 +147,22 @@ class ImageWarpViewController: UIViewController {
 
         guard let minMax = getMinAndMaxPoints(points: bottomLeft, bottomRight, topLeft, topRight) else { return }
 
-        let center = imageView.center
+//        let origin = imageView.frame.origin
 
         let newWidth = minMax.max.x - minMax.min.x
         let newHeight = minMax.max.y - minMax.min.y
 
-        print("newSize: \(newWidth), \(newHeight)")
+        let newSize = CGSize(width: newWidth, height: newHeight)
 
-        imageView.frame = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-        imageView.center = center
+//        print("newSize: \(newWidth), \(newHeight)")
+
+//        print("old origin: \(imageView.frame.origin)")
+
+        imageView.frame.size = newSize
+//        imageView.frame = CGRect(origin: origin, size: newSize)
+//        imageView.center = center
+
+//        print("new origin: \(imageView.frame.origin)")
 
         perspectiveTransform.setValue(CIVector(cgPoint: bottomLeft), forKey: "inputBottomLeft")
         perspectiveTransform.setValue(CIVector(cgPoint: bottomRight), forKey: "inputBottomRight")
@@ -70,7 +182,7 @@ class ImageWarpViewController: UIViewController {
 
         var min = firstPoint
         var max = firstPoint
-        
+
         for point in points {
 
             if point.x < min.x { min.x = point.x }
@@ -80,5 +192,48 @@ class ImageWarpViewController: UIViewController {
         }
 
         return (min: min, max: max)
+    }
+
+    private func configurePins() {
+
+//        let pinImage = UIImage(named: "scale")
+
+        let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+
+        var pin = UIImageView(frame: frame)
+        pin.layer.cornerRadius = pin.frame.height / 2
+        pin.layer.masksToBounds = true
+        pin.contentMode = .scaleAspectFit
+        pin.backgroundColor = .yellow
+        pin.center = CGPoint(x: imageView.frame.minX - PIN_OFFSET, y: imageView.frame.maxY + PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.bottomLeft.rawValue)
+        view.addSubview(pin)
+
+        pin = UIImageView(frame: frame)
+        pin.layer.cornerRadius = pin.frame.height / 2
+        pin.layer.masksToBounds = true
+        pin.contentMode = .scaleAspectFit
+        pin.backgroundColor = .blue
+        pin.center = CGPoint(x: imageView.frame.maxX + PIN_OFFSET, y: imageView.frame.maxY + PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.bottomRight.rawValue)
+        view.addSubview(pin)
+
+        pin = UIImageView(frame: frame)
+        pin.layer.cornerRadius = pin.frame.height / 2
+        pin.layer.masksToBounds = true
+        pin.contentMode = .scaleAspectFit
+        pin.backgroundColor = .red
+        pin.center = CGPoint(x: imageView.frame.minX - PIN_OFFSET, y: imageView.frame.minY - PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.topLeft.rawValue)
+        view.addSubview(pin)
+
+        pin = UIImageView(frame: frame)
+        pin.layer.cornerRadius = pin.frame.height / 2
+        pin.layer.masksToBounds = true
+        pin.contentMode = .scaleAspectFit
+        pin.backgroundColor = .green
+        pin.center = CGPoint(x: imageView.frame.maxX + PIN_OFFSET, y: imageView.frame.minY - PIN_OFFSET)
+        pins.insert(pin, at: PinTypes.topRight.rawValue)
+        view.addSubview(pin)
     }
 }
