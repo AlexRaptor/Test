@@ -69,22 +69,8 @@
                                 <rect key="frame" x="87.5" y="265.5" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iI0-Ah-cDj">
-                                <rect key="frame" x="123" y="617" width="129" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="129" id="DZV-jx-J9K"/>
-                                </constraints>
-                                <state key="normal" title="TEST"/>
-                                <connections>
-                                    <action selector="testButtonTapped:" destination="FBb-HC-dkG" eventType="touchUpInside" id="NNe-IH-Nfj"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="1Qd-5A-3IN" firstAttribute="bottom" secondItem="iI0-Ah-cDj" secondAttribute="bottom" constant="20" id="KJH-RG-dnI"/>
-                            <constraint firstItem="iI0-Ah-cDj" firstAttribute="centerX" secondItem="1Qd-5A-3IN" secondAttribute="centerX" id="PK7-x1-WYc"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="1Qd-5A-3IN"/>
                     </view>
                     <connections>
