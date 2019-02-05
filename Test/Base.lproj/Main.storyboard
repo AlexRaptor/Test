@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,12 +65,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hn3-F8-OXm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hn3-F8-OXm">
                                 <rect key="frame" x="87.5" y="265.5" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="gXt-LP-WcR"/>
-                                    <constraint firstAttribute="height" constant="200" id="vwz-vr-UKv"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iI0-Ah-cDj">
                                 <rect key="frame" x="123" y="617" width="129" height="30"/>
@@ -88,8 +84,6 @@
                         <constraints>
                             <constraint firstItem="1Qd-5A-3IN" firstAttribute="bottom" secondItem="iI0-Ah-cDj" secondAttribute="bottom" constant="20" id="KJH-RG-dnI"/>
                             <constraint firstItem="iI0-Ah-cDj" firstAttribute="centerX" secondItem="1Qd-5A-3IN" secondAttribute="centerX" id="PK7-x1-WYc"/>
-                            <constraint firstItem="hn3-F8-OXm" firstAttribute="centerX" secondItem="1Qd-5A-3IN" secondAttribute="centerX" id="S5e-CI-KVQ"/>
-                            <constraint firstItem="hn3-F8-OXm" firstAttribute="centerY" secondItem="1Qd-5A-3IN" secondAttribute="centerY" id="lrW-SR-P5X"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Qd-5A-3IN"/>
                     </view>
