@@ -72,7 +72,7 @@ class ImageWarpViewController: UIViewController {
         guard let perspectiveTransform = CIFilter(name: "CIPerspectiveTransform")
             else { print("Filter not found"); return }
 
-        let imageBottom = imageView.frame.maxX
+        let imageBottom = imageView.frame.maxY
 
         let bottomLeft = pins[PinTypes.bottomLeft.rawValue].center + CGPoint(x: PIN_OFFSET, y: -PIN_OFFSET)
         let bottomRight = pins[PinTypes.bottomRight.rawValue].center + CGPoint(x: -PIN_OFFSET, y: -PIN_OFFSET)
