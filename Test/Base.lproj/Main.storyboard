@@ -17,22 +17,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rtc-nc-sZC" customClass="GradientView" customModule="Test" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                        <color key="value" red="0.49803921568627452" green="0.11764705882352941" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                        <color key="value" red="0.87450980392156863" green="0.34901960784313724" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontal" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="angle">
+                                        <real key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xno-sj-QT0">
-                                <rect key="frame" x="20" y="72" width="335" height="30"/>
+                                <rect key="frame" x="32" y="72" width="311" height="30"/>
                                 <state key="normal" title="Static Page Control"/>
                                 <connections>
                                     <segue destination="hCw-AS-esF" kind="show" id="8xm-2i-G13"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5zO-RV-EUC">
-                                <rect key="frame" x="103.5" y="110" width="168" height="30"/>
+                                <rect key="frame" x="32" y="110" width="311" height="30"/>
                                 <state key="normal" title="CIPerspectiveCorrection"/>
                                 <connections>
                                     <segue destination="FBb-HC-dkG" kind="show" id="TcD-O2-XeK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ail-KY-fkA">
-                                <rect key="frame" x="125.5" y="148" width="124" height="30"/>
+                                <rect key="frame" x="32" y="148" width="311" height="30"/>
                                 <state key="normal" title="SKWarpGeometry "/>
                                 <connections>
                                     <segue destination="gk6-KS-FTA" kind="show" id="tgu-9v-XhZ"/>
@@ -41,13 +57,19 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ail-KY-fkA" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9ku-4a-t3u"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Xno-sj-QT0" secondAttribute="trailing" constant="20" id="GGK-S8-ohv"/>
-                            <constraint firstItem="Xno-sj-QT0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="IGu-zG-xo7"/>
+                            <constraint firstItem="5zO-RV-EUC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="0qq-mf-mIi"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5zO-RV-EUC" secondAttribute="trailing" constant="32" id="2lF-7S-JK2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ail-KY-fkA" secondAttribute="trailing" constant="32" id="8MR-mj-4Fg"/>
+                            <constraint firstItem="rtc-nc-sZC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8rX-LH-9ad"/>
+                            <constraint firstAttribute="trailing" secondItem="rtc-nc-sZC" secondAttribute="trailing" id="ANh-ch-GZS"/>
+                            <constraint firstItem="Xno-sj-QT0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="Nr2-nv-1kr"/>
+                            <constraint firstAttribute="bottom" secondItem="rtc-nc-sZC" secondAttribute="bottom" id="RWS-ew-tXK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Xno-sj-QT0" secondAttribute="trailing" constant="32" id="UVg-fJ-o9P"/>
                             <constraint firstItem="ail-KY-fkA" firstAttribute="top" secondItem="5zO-RV-EUC" secondAttribute="bottom" constant="8" id="Xny-cK-tu3"/>
                             <constraint firstItem="Xno-sj-QT0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="cwr-0Z-OnB"/>
+                            <constraint firstAttribute="top" secondItem="rtc-nc-sZC" secondAttribute="top" id="ej0-Yv-6uv"/>
                             <constraint firstItem="5zO-RV-EUC" firstAttribute="top" secondItem="Xno-sj-QT0" secondAttribute="bottom" constant="8" id="gPf-eX-fde"/>
-                            <constraint firstItem="5zO-RV-EUC" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="mAN-r0-Fwa"/>
+                            <constraint firstItem="ail-KY-fkA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="xx6-dY-sbU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
