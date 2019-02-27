@@ -23,15 +23,31 @@ extension CGPoint {
         return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 
-    static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-        return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
-    }
-
     static func += (lhs: inout CGPoint, rhs: CGPoint) {
         lhs = lhs + rhs // swiftlint:disable:this shorthand_operator
     }
 
+    static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+        return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+    }
+
     static func -= (lhs: inout CGPoint, rhs: CGPoint) {
         lhs = lhs - rhs // swiftlint:disable:this shorthand_operator
+    }
+
+    static func + (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+        return CGPoint(x: lhs.x + rhs, y: lhs.y + rhs)
+    }
+
+    static func += (lhs: inout CGPoint, rhs: CGFloat) {
+        lhs = lhs + rhs
+    }
+
+    static func - (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+        return CGPoint(x: lhs.x - rhs, y: lhs.y - rhs)
+    }
+
+    static func -= (lhs: inout CGPoint, rhs: CGFloat) {
+        lhs = lhs - rhs
     }
 }

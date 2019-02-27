@@ -66,7 +66,6 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="endColor">
                                         <color key="value" red="0.87450980392156863" green="0.34901960784313724" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isHorizontal" value="NO"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="angle">
                                         <real key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
@@ -189,10 +188,10 @@
             </objects>
             <point key="canvasLocation" x="-274.39999999999998" y="25.637181409295355"/>
         </scene>
-        <!--View Controller-->
+        <!--Tutorial View Controller-->
         <scene sceneID="Sjl-AV-edP">
             <objects>
-                <viewController id="Kmb-yQ-bYS" sceneMemberID="viewController">
+                <viewController id="Kmb-yQ-bYS" customClass="TutorialViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iYR-wX-Zsf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -204,10 +203,10 @@
             </objects>
             <point key="canvasLocation" x="2730" y="-706"/>
         </scene>
-        <!--Page View Controller-->
+        <!--Tutorial Page View Controller-->
         <scene sceneID="fou-Zv-ng3">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="FQi-3V-h1o" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="FQi-3V-h1o" customClass="TutorialPageViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jqS-lh-3kU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1791" y="-707"/>

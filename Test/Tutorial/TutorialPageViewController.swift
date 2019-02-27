@@ -10,21 +10,44 @@ import UIKit
 
 class TutorialPageViewController: UIPageViewController {
 
+    var bottomView: TutorialBottomView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        configureBottom()
     }
-    
 
-    /*
-    // MARK: - Navigation
+    func configureBottom() {
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+//        bottomView = TutorialBottomView.instanti
+        view.addSubview(bottomView)
+
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+
+        let views = ["bottomView": bottomView]
+
+        let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView(122)]", options: .alignAllLastBaseline, metrics: nil, views: views)
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView]-0-|", options: .alignAllLastBaseline, metrics: nil, views: views)
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[bottomView]-0-|", options: .alignAllLastBaseline, metrics: nil, views: views)
+
+        bottomView.addConstraints(heightConstraints + verticalConstraints + horizontalConstraints)
     }
-    */
-
 }
+
+//extension TutorialPageViewController: UIPageViewControllerDataSource {
+//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+//        <#code#>
+//    }
+//
+//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+//        <#code#>
+//    }
+//
+//
+//
+//}
+//
+//extension TutorialPageViewController: UIPageViewControllerDelegate {
+//
+//}
