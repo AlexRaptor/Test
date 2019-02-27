@@ -27,7 +27,6 @@ public class CustomizableButton: UIButton {
     /// Layer border width. default = 0.0
     @IBInspectable public var borderWidth: CGFloat = 0.0 {
         didSet {
-            //            layer.borderWidth = borderWidth
             setBackgroundFromColor()
         }
     }
@@ -35,7 +34,7 @@ public class CustomizableButton: UIButton {
     /// Layer border color. default = nil
     @IBInspectable public var borderColor: UIColor? {
         didSet {
-            //            layer.borderColor = borderColor?.cgColor
+            setBackgroundFromColor()
         }
     }
 
@@ -132,8 +131,6 @@ public class CustomizableButton: UIButton {
 
     private func configureLayer() {
         layer.cornerRadius = cornerRadius
-        //        layer.borderWidth = borderWidth
-        //        layer.borderColor = borderColor?.cgColor
     }
 
     private func configureShadow() {
@@ -143,51 +140,72 @@ public class CustomizableButton: UIButton {
         layer.shadowOffset = shadowOffset
     }
 
-    private func makeBackground(from color: UIColor) -> UIImage? {
-        UIGraphicsBeginImageContext(frame.size)
+    private func makeOutMaskLayer() -> CAShapeLayer {
+        let outMaskPath = makeOutMaskPath()
+        let layer = CAShapeLayer()
 
-        defer {
-            UIGraphicsEndImageContext()
-        }
+        layer.fillColor = borderColor?.cgColor
+        layer.frame = bounds
+        layer.path = outMaskPath.cgPath
+        layer.fillRule = .evenOdd
 
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
+        return layer
+    }
 
-        context.saveGState()
+    private func makeInMaskLayer() -> CAShapeLayer {
+        let inMaskPath = makeInMaskPath()
+        let layer = CAShapeLayer()
 
-        context.clear(bounds)
-        color.setFill()
-        borderColor?.setStroke()
+        layer.frame = bounds
+        layer.path = inMaskPath.cgPath
+        layer.fillRule = .evenOdd
 
-        let imageRect = CGRect(
-            origin: bounds.origin,// + layer.borderWidth,
-            size: bounds.size// - layer.borderWidth * 2
+        return layer
+    }
+
+    private func makeOutMaskPath() -> UIBezierPath {
+        let outMaskRect = CGRect(
+            origin: bounds.origin,
+            size: bounds.size
         )
 
-        let imagePath = UIBezierPath(roundedRect: imageRect, cornerRadius: layer.cornerRadius - layer.borderWidth)
+        let inMaskPath = makeInMaskPath()
+        let path = UIBezierPath(roundedRect: outMaskRect, cornerRadius: cornerRadius)
 
-        imagePath.lineWidth = borderWidth
-        imagePath.stroke()
-        imagePath.fill()
+        path.append(inMaskPath)
+        path.usesEvenOddFillRule = true
 
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        return path
+    }
 
-        context.restoreGState()
+    private func makeInMaskPath() -> UIBezierPath {
+        let inMaskRect = CGRect(
+            origin: bounds.origin + borderWidth,
+            size: bounds.size - borderWidth * 2
+        )
+
+        let path = UIBezierPath(roundedRect: inMaskRect, cornerRadius: cornerRadius - borderWidth)
+
+        return path
+    }
+
+    private func makeBackground(from color: UIColor) -> UIImage? {
+        let outMaskLayer = makeOutMaskLayer()
+        let inMaskLayer = makeInMaskLayer()
+        inMaskLayer.fillColor = color.cgColor
+
+        let layer = CALayer()
+
+        layer.frame = bounds
+        layer.addSublayer(outMaskLayer)
+        layer.addSublayer(inMaskLayer)
+
+        let image = UIImage(layer: layer)
 
         return image
     }
 
     private func makeGradientBackground(from fromColor: UIColor, to toColor: UIColor) -> UIImage? {
-        let gradientLayer = CAGradientLayer()
-
-        let gradientFrame = CGRect(
-            origin: bounds.origin + layer.borderWidth,
-            size: bounds.size - layer.borderWidth * 2
-        )
-
-        gradientLayer.frame = gradientFrame
-
         let startPoint: CGPoint
         let endPoint: CGPoint
 
@@ -205,12 +223,23 @@ public class CustomizableButton: UIButton {
             endPoint = CGPoint(x: 1.0, y: 1.0)
         }
 
+        let outMaskLayer = makeOutMaskLayer()
+        let inMaskLayer = makeInMaskLayer()
+        let gradientLayer = CAGradientLayer()
+
+        gradientLayer.frame = bounds
         gradientLayer.startPoint = startPoint
         gradientLayer.endPoint = endPoint
         gradientLayer.colors = [fromColor.cgColor, toColor.cgColor]
-        gradientLayer.cornerRadius = layer.cornerRadius - layer.borderWidth
+        gradientLayer.mask = inMaskLayer
 
-        let gradientImage = UIImage(layer: gradientLayer)
+        let layer = CALayer()
+
+        layer.frame = bounds
+        layer.addSublayer(outMaskLayer)
+        layer.addSublayer(gradientLayer)
+
+        let gradientImage = UIImage(layer: layer)
 
         return gradientImage
     }
@@ -229,12 +258,3 @@ public class CustomizableButton: UIButton {
         setBackgroundImage(_backgroundFromColor, for: .normal)
     }
 }
-
-
-
-
-
-
-
-
-
