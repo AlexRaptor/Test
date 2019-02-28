@@ -20,18 +20,19 @@ class TutorialPageViewController: UIPageViewController {
 
     func configureBottom() {
 
-//        bottomView = TutorialBottomView.instanti
+        bottomView = TutorialBottomView.instantiate()
+
         view.addSubview(bottomView)
 
         bottomView.translatesAutoresizingMaskIntoConstraints = false
 
         let views = ["bottomView": bottomView]
 
-        let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView(122)]", options: .alignAllLastBaseline, metrics: nil, views: views)
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView]-0-|", options: .alignAllLastBaseline, metrics: nil, views: views)
-        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[bottomView]-0-|", options: .alignAllLastBaseline, metrics: nil, views: views)
+        let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView(122)]", options: [], metrics: nil, views: views)
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView]-0-|", options: [], metrics: nil, views: views)
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[bottomView]-0-|", options: [], metrics: nil, views: views)
 
-        bottomView.addConstraints(heightConstraints + verticalConstraints + horizontalConstraints)
+        NSLayoutConstraint.activate(heightConstraints + verticalConstraints + horizontalConstraints)
     }
 }
 
