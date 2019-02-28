@@ -18,9 +18,16 @@ class TutorialPageViewController: UIPageViewController {
         configureBottom()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        bottomView?.roundCorners([.topLeft, .topRight], radius: 10)
+    }
+
     func configureBottom() {
 
         bottomView = TutorialBottomView.instantiate()
+
 
         view.addSubview(bottomView)
 
@@ -28,9 +35,9 @@ class TutorialPageViewController: UIPageViewController {
 
         let views = ["bottomView": bottomView]
 
-        let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView(122)]", options: [], metrics: nil, views: views)
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView]-0-|", options: [], metrics: nil, views: views)
-        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[bottomView]-0-|", options: [], metrics: nil, views: views)
+        let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView(122)]", options: .alignAllLastBaseline, metrics: nil, views: views)
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView]-0-|", options: .alignAllLastBaseline, metrics: nil, views: views)
+        let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[bottomView]-16-|", options: .alignAllLastBaseline, metrics: nil, views: views)
 
         NSLayoutConstraint.activate(heightConstraints + verticalConstraints + horizontalConstraints)
     }
