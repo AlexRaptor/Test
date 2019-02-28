@@ -10,9 +10,14 @@ import UIKit
 
 final class TutorialBottomView: UIView, Instantiable {
 
+    var buttonHandler: (() -> Void)?
+
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var view: UIView!
 
     @IBAction func buttonTapped(_ sender: UIButton) {
+
+        buttonHandler?()
     }
 }

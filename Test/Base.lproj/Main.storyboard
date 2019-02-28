@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h5D-IJ-JCF">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -14,38 +14,38 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rtc-nc-sZC" customClass="GradientView" customModule="Test" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lbv-PX-HHN">
-                                        <rect key="frame" x="8" y="72" width="304" height="144"/>
+                                        <rect key="frame" x="8" y="72" width="359" height="144"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xno-sj-QT0">
-                                                <rect key="frame" x="0.0" y="0.0" width="304" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="359" height="30"/>
                                                 <state key="normal" title="Static Page Control"/>
                                                 <connections>
                                                     <segue destination="hCw-AS-esF" kind="show" id="8xm-2i-G13"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ail-KY-fkA">
-                                                <rect key="frame" x="0.0" y="38" width="304" height="30"/>
+                                                <rect key="frame" x="0.0" y="38" width="359" height="30"/>
                                                 <state key="normal" title="SKWarpGeometry "/>
                                                 <connections>
                                                     <segue destination="gk6-KS-FTA" kind="show" id="tgu-9v-XhZ"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5zO-RV-EUC">
-                                                <rect key="frame" x="0.0" y="76" width="304" height="30"/>
+                                                <rect key="frame" x="0.0" y="76" width="359" height="30"/>
                                                 <state key="normal" title="CIPerspectiveCorrection"/>
                                                 <connections>
                                                     <segue destination="FBb-HC-dkG" kind="show" id="TcD-O2-XeK"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XwG-xq-r1a">
-                                                <rect key="frame" x="0.0" y="114" width="304" height="30"/>
+                                                <rect key="frame" x="0.0" y="114" width="359" height="30"/>
                                                 <state key="normal" title="Tutorial Page Control"/>
                                                 <connections>
                                                     <segue destination="FQi-3V-h1o" kind="show" id="h2r-Ly-TYd"/>
@@ -93,7 +93,7 @@
             <objects>
                 <viewController id="FBb-HC-dkG" customClass="ImageWarpViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0s4-ws-OEf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hn3-F8-OXm">
@@ -127,7 +127,7 @@
             <objects>
                 <viewController storyboardIdentifier="PageView" id="DBG-06-l4I" customClass="StaticPageControlViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8wg-gD-SRV">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="hZk-g5-D9I"/>
@@ -142,7 +142,7 @@
             <objects>
                 <viewController id="gk6-KS-FTA" customClass="ImageWarpSKViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HgE-j8-Phm" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="bt1-MV-EWy"/>
@@ -158,7 +158,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hCw-AS-esF" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kh7-xa-Xo4">
-                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -176,7 +176,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="h5D-IJ-JCF" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HOR-DQ-QKZ">
-                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -191,25 +191,60 @@
         <!--Tutorial View Controller-->
         <scene sceneID="Sjl-AV-edP">
             <objects>
-                <viewController id="Kmb-yQ-bYS" customClass="TutorialViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TutorialViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kmb-yQ-bYS" customClass="TutorialViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iYR-wX-Zsf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial_1" translatesAutoresizingMaskIntoConstraints="NO" id="zwL-iA-FqZ">
+                                <rect key="frame" x="45" y="136" width="285" height="409"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQA-Vw-Vgh">
+                                <rect key="frame" x="0.0" y="20" width="375" height="116"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Грудь" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzu-jt-by3">
+                                        <rect key="frame" x="153" y="43.5" width="69" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <color key="textColor" red="0.28235294117647058" green="0.28235294117647058" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bzu-jt-by3" firstAttribute="centerY" secondItem="RQA-Vw-Vgh" secondAttribute="centerY" id="Lur-wq-449"/>
+                                    <constraint firstItem="bzu-jt-by3" firstAttribute="centerX" secondItem="RQA-Vw-Vgh" secondAttribute="centerX" id="rGs-m9-1GK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95294117647058818" green="0.97254901960784312" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="RQA-Vw-Vgh" firstAttribute="top" secondItem="P43-u2-hMD" secondAttribute="top" id="8Ir-2d-C7m"/>
+                            <constraint firstItem="zwL-iA-FqZ" firstAttribute="centerX" secondItem="P43-u2-hMD" secondAttribute="centerX" id="9IK-ic-mPL"/>
+                            <constraint firstItem="RQA-Vw-Vgh" firstAttribute="leading" secondItem="P43-u2-hMD" secondAttribute="leading" id="DWA-rR-TWO"/>
+                            <constraint firstItem="P43-u2-hMD" firstAttribute="trailing" secondItem="RQA-Vw-Vgh" secondAttribute="trailing" id="Qk8-bN-Odl"/>
+                            <constraint firstItem="P43-u2-hMD" firstAttribute="bottom" secondItem="zwL-iA-FqZ" secondAttribute="bottom" constant="122" id="gM7-WL-Elb"/>
+                            <constraint firstItem="zwL-iA-FqZ" firstAttribute="top" secondItem="RQA-Vw-Vgh" secondAttribute="bottom" id="mqi-o3-QZA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="P43-u2-hMD"/>
                     </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="bzu-jt-by3" id="KC5-BP-SWx"/>
+                        <outlet property="previewImage" destination="zwL-iA-FqZ" id="GBk-xf-ejB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mtL-0R-a9j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2730" y="-706"/>
+            <point key="canvasLocation" x="2728.8000000000002" y="-707.49625187406298"/>
         </scene>
         <!--Tutorial Page View Controller-->
         <scene sceneID="fou-Zv-ng3">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="FQi-3V-h1o" customClass="TutorialPageViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="FQi-3V-h1o" customClass="TutorialPageViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jqS-lh-3kU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1791" y="-707"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tutorial_1" width="285" height="409"/>
+    </resources>
 </document>
