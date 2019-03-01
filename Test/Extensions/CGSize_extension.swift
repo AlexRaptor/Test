@@ -10,6 +10,13 @@ import UIKit
 
 extension CGSize {
 
+    init(dimension: CGFloat) {
+        self.init(width: dimension, height: dimension)
+    }
+}
+
+extension CGSize {
+
     static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
         return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
     }

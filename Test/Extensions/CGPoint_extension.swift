@@ -11,6 +11,13 @@ import UIKit
 
 extension CGPoint {
 
+    init(scalar: CGFloat) {
+        self.init(x: scalar, y: scalar)
+    }
+}
+
+extension CGPoint {
+
     var magnitude: CGFloat {
         return sqrt(pow(self.x, 2) + pow(self.y, 2))
     }
