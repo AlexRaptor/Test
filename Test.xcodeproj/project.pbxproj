@@ -15,6 +15,7 @@
 		6643B6E22223E412007E8835 /* Instantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6643B6E12223E412007E8835 /* Instantiable.swift */; };
 		6643B6E52223E950007E8835 /* TutorialBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6643B6E42223E950007E8835 /* TutorialBottomView.xib */; };
 		6643B6E72223EABB007E8835 /* TutorialBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6643B6E62223EABB007E8835 /* TutorialBottomView.swift */; };
+		66583289222E88640024C1D5 /* AnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66583288222E88640024C1D5 /* AnimationViewController.swift */; };
 		66944C292207FCF100BF7045 /* ImageWarpSKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66944C282207FCF100BF7045 /* ImageWarpSKViewController.swift */; };
 		66944C4F220830D200BF7045 /* CGPoint_extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66944C4E220830D200BF7045 /* CGPoint_extension.swift */; };
 		66A59F59221BF72400E229A5 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A59F58221BF72400E229A5 /* GradientView.swift */; };
@@ -40,6 +41,7 @@
 		6643B6E12223E412007E8835 /* Instantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instantiable.swift; sourceTree = "<group>"; };
 		6643B6E42223E950007E8835 /* TutorialBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialBottomView.xib; sourceTree = "<group>"; };
 		6643B6E62223EABB007E8835 /* TutorialBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialBottomView.swift; sourceTree = "<group>"; };
+		66583288222E88640024C1D5 /* AnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationViewController.swift; sourceTree = "<group>"; };
 		66944C282207FCF100BF7045 /* ImageWarpSKViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWarpSKViewController.swift; sourceTree = "<group>"; };
 		66944C4E220830D200BF7045 /* CGPoint_extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint_extension.swift; sourceTree = "<group>"; };
 		66A59F58221BF72400E229A5 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		6658328A222E886D0024C1D5 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				66583288222E88640024C1D5 /* AnimationViewController.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		66944C502208342D00BF7045 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 				6643B6D82223D47E007E8835 /* PageViewController with static PageControl */,
 				6643B6D92223D4AD007E8835 /* Perspective Warp */,
 				6643B6DA2223D4C9007E8835 /* Tutorial */,
+				6658328A222E886D0024C1D5 /* Animation */,
 				6643B6D32223D381007E8835 /* Custom views */,
 				6643B6E32223E41C007E8835 /* Protocols */,
 				66944C502208342D00BF7045 /* Extensions */,
@@ -248,7 +259,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "#if which swiftlint >/dev/null; then\n#swiftlint\n#else\n#echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -269,6 +280,7 @@
 				66E7A5D521FEBF2900DF7B15 /* UIPageViewControllerWithOverlayIndicator.swift in Sources */,
 				6643B6E22223E412007E8835 /* Instantiable.swift in Sources */,
 				66A59F59221BF72400E229A5 /* GradientView.swift in Sources */,
+				66583289222E88640024C1D5 /* AnimationViewController.swift in Sources */,
 				6643B6E72223EABB007E8835 /* TutorialBottomView.swift in Sources */,
 				6643B6D52223D442007E8835 /* TutorialPageViewController.swift in Sources */,
 				66E7A5C321FEBED100DF7B15 /* AppDelegate.swift in Sources */,
