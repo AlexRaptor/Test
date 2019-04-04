@@ -89,7 +89,7 @@ class TutorialPageViewController: UIPageViewController {
 
         bottomView.translatesAutoresizingMaskIntoConstraints = false
 
-        let views: [String: Any] = ["bottomView": bottomView]
+        let views: [String: Any] = ["bottomView": bottomView!]
 
         let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView(122)]", options: .alignAllLastBaseline, metrics: nil, views: views)
         let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomView]-0-|", options: .alignAllLastBaseline, metrics: nil, views: views)
@@ -122,7 +122,7 @@ extension TutorialPageViewController: UIPageViewControllerDataSource {
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
 
-        guard let currentIndex = tutorialViewControllers.index(of: viewController as! TutorialViewController),
+        guard let currentIndex = tutorialViewControllers.firstIndex(of: viewController as? TutorialViewController),
         currentIndex > 0
             else { return nil }
 
@@ -131,7 +131,7 @@ extension TutorialPageViewController: UIPageViewControllerDataSource {
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
 
-        guard let currentIndex = tutorialViewControllers.index(of: viewController as! TutorialViewController),
+        guard let currentIndex = tutorialViewControllers.firstIndex(of: viewController as? TutorialViewController),
             currentIndex < (tutorialViewControllers.count - 1)
             else { return nil }
 
@@ -145,7 +145,7 @@ extension TutorialPageViewController: UIPageViewControllerDelegate {
 
         guard let tutorialViewController = pageViewController.viewControllers![0] as? TutorialViewController else { return }
 
-        currentPageIndex = tutorialViewControllers.index(of: tutorialViewController)!
+        currentPageIndex = tutorialViewControllers.firstIndex(of: tutorialViewController)!
 
         bottomView.pageControl.currentPage = currentPageIndex
         updateUI()

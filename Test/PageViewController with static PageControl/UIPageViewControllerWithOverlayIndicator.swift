@@ -63,7 +63,7 @@ extension PageViewControllerWithStaticPageControl: UIPageViewControllerDataSourc
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController) -> UIViewController? {
 
-        guard var currentIndex = orderedViewControllers.index(of: viewController) else { return nil }
+        guard var currentIndex = orderedViewControllers.firstIndex(of: viewController) else { return nil }
 
         if currentIndex == 0 {
             currentIndex = orderedViewControllers.count
@@ -77,7 +77,7 @@ extension PageViewControllerWithStaticPageControl: UIPageViewControllerDataSourc
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerAfter viewController: UIViewController) -> UIViewController? {
 
-        guard var currentIndex = orderedViewControllers.index(of: viewController) else { return nil }
+        guard var currentIndex = orderedViewControllers.firstIndex(of: viewController) else { return nil }
 
         currentIndex += 1
 
@@ -98,6 +98,6 @@ extension PageViewControllerWithStaticPageControl: UIPageViewControllerDelegate 
                             transitionCompleted completed: Bool) {
 
         let pageContentViewController = pageViewController.viewControllers![0]
-        self.pageControl.currentPage = orderedViewControllers.index(of: pageContentViewController)!
+        self.pageControl.currentPage = orderedViewControllers.firstIndex(of: pageContentViewController)!
     }
 }
