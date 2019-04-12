@@ -16,6 +16,8 @@
 		6643B6E52223E950007E8835 /* TutorialBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6643B6E42223E950007E8835 /* TutorialBottomView.xib */; };
 		6643B6E72223EABB007E8835 /* TutorialBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6643B6E62223EABB007E8835 /* TutorialBottomView.swift */; };
 		6655A21E2260A54900ABD952 /* ImageRotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6655A21D2260A54900ABD952 /* ImageRotationViewController.swift */; };
+		6655A2222260A83700ABD952 /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6655A2212260A83700ABD952 /* CarouselView.xib */; };
+		6655A2242260A9BF00ABD952 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6655A2232260A9BF00ABD952 /* CarouselView.swift */; };
 		66583289222E88640024C1D5 /* AnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66583288222E88640024C1D5 /* AnimationViewController.swift */; };
 		66944C292207FCF100BF7045 /* ImageWarpSKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66944C282207FCF100BF7045 /* ImageWarpSKViewController.swift */; };
 		66944C4F220830D200BF7045 /* CGPoint_extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66944C4E220830D200BF7045 /* CGPoint_extension.swift */; };
@@ -43,6 +45,8 @@
 		6643B6E42223E950007E8835 /* TutorialBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialBottomView.xib; sourceTree = "<group>"; };
 		6643B6E62223EABB007E8835 /* TutorialBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialBottomView.swift; sourceTree = "<group>"; };
 		6655A21D2260A54900ABD952 /* ImageRotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageRotationViewController.swift; path = ../ImageRotationViewController.swift; sourceTree = "<group>"; };
+		6655A2212260A83700ABD952 /* CarouselView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CarouselView.xib; sourceTree = "<group>"; };
+		6655A2232260A9BF00ABD952 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
 		66583288222E88640024C1D5 /* AnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationViewController.swift; sourceTree = "<group>"; };
 		66944C282207FCF100BF7045 /* ImageWarpSKViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWarpSKViewController.swift; sourceTree = "<group>"; };
 		66944C4E220830D200BF7045 /* CGPoint_extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint_extension.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				6655A21D2260A54900ABD952 /* ImageRotationViewController.swift */,
+				6655A2212260A83700ABD952 /* CarouselView.xib */,
+				6655A2232260A9BF00ABD952 /* CarouselView.swift */,
 			);
 			path = "Image Rotation";
 			sourceTree = "<group>";
@@ -257,6 +263,7 @@
 				66E7A5CA21FEBED400DF7B15 /* Assets.xcassets in Resources */,
 				66E7A5C821FEBED100DF7B15 /* Main.storyboard in Resources */,
 				6643B6E52223E950007E8835 /* TutorialBottomView.xib in Resources */,
+				6655A2222260A83700ABD952 /* CarouselView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +299,7 @@
 				66E7209D2226385E006DE254 /* CustomizableButton.swift in Sources */,
 				66944C4F220830D200BF7045 /* CGPoint_extension.swift in Sources */,
 				66E720A122263AE0006DE254 /* UIImage_extension.swift in Sources */,
+				6655A2242260A9BF00ABD952 /* CarouselView.swift in Sources */,
 				6643B6D72223D45F007E8835 /* TutorialViewController.swift in Sources */,
 				6600050822045C4A003350DF /* ImageWarpViewController.swift in Sources */,
 				6632E9BF2227BA6800F93A6C /* UIStoryboard_extension.swift in Sources */,

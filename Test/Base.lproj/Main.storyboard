@@ -208,9 +208,34 @@
                     <view key="view" contentMode="scaleToFill" id="AlP-0P-m6E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f6m-At-mVi">
+                                <rect key="frame" x="87.5" y="80" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="fab-km-eeV"/>
+                                    <constraint firstAttribute="width" secondItem="f6m-At-mVi" secondAttribute="height" multiplier="1:1" id="zaj-sk-Dhg"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l4y-DH-e6T">
+                                <rect key="frame" x="170.5" y="296" width="34" height="30"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="onStartTap:" destination="HlD-bS-azG" eventType="touchUpInside" id="O76-hW-aeZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="l4y-DH-e6T" firstAttribute="centerX" secondItem="f6m-At-mVi" secondAttribute="centerX" id="OQF-b6-dgs"/>
+                            <constraint firstItem="f6m-At-mVi" firstAttribute="top" secondItem="SEv-da-s9v" secondAttribute="top" constant="16" id="TlU-e6-Hmb"/>
+                            <constraint firstItem="l4y-DH-e6T" firstAttribute="top" secondItem="f6m-At-mVi" secondAttribute="bottom" constant="16" id="XaR-7A-k4z"/>
+                            <constraint firstItem="f6m-At-mVi" firstAttribute="centerX" secondItem="SEv-da-s9v" secondAttribute="centerX" id="wHw-Id-HeS"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="SEv-da-s9v"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="f6m-At-mVi" id="MXO-GJ-nQm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cW3-hQ-Zc5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
