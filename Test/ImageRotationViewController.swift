@@ -14,7 +14,7 @@ class ImageRotationViewController: UIViewController {
     @IBOutlet private weak var leftImageView: UIImageView!
     @IBOutlet private weak var rightImageView: UIImageView!
     
-    private var imagesArray = [(color: UIImage?, bw: UIImage?)]()
+    private var imagesArray: [(color: UIImage?, bw: UIImage?)] = [(nil, nil), (nil, nil), (nil, nil)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,18 +48,9 @@ class ImageRotationViewController: UIViewController {
     
     func initializeUI() {
         
-        if let firstImage = imagesArray.first {
-            frontImageView.image = firstImage.color
-        }
-        
-        if imagesArray.count > 1 {
-            leftImageView.image = imagesArray[1].color
-            
-            if imagesArray.count > 2 {
-                rightImageView.image = imagesArray[2].color
-            }
-        }
-        
+        frontImageView.image = imagesArray[0].color
+        leftImageView.image = imagesArray[1].bw
+        rightImageView.image = imagesArray[2].bw
     }
     
 //    func setAnchorPoint(anchorPoint: CGPoint, view: UIView) {
@@ -83,69 +74,69 @@ class ImageRotationViewController: UIViewController {
     
     @IBAction private func onStartTap(_ sender: UIButton) {
         
+        let duration = 1.0
+        
         sender.isEnabled = false
         
-//        UIView.transition(with: self.frontImageView,
-//                          duration:1,
-//                          options: .transitionCrossDissolve,
-//                          animations: { [weak self] in
-//                            self?.frontImageView.image = lastImage
-//
-//        }) { (_) in
-//            UIView.transition(with: self.frontImageView,
-//                              duration:1,
-//                              options: .transitionCrossDissolve,
-//                              animations: { [weak self] in
-//                                self?.frontImageView.image = firstImage
-//
-//            }) { (_) in
-//                sender.isEnabled = true
-//            }
-//        }
+        view.bringSubviewToFront(rightImageView)
+        view.bringSubviewToFront(frontImageView)
         
-//        let frontImageFrame = frontImageView.frame
-//        let leftImageFrame = leftImageView.frame
-//        let rightImageFrame = rightImageView.frame
-//
-//        let frontImageCenter = frontImageView.center
-//        let leftImageCenter = leftImageView.center
-//        let rightImageCenter = rightImageView.center
+        UIView.transition(with: self.frontImageView,
+                          duration: duration,
+                          options: .transitionCrossDissolve,
+                          animations: { [weak self] in
+                            self?.frontImageView.image = self?.imagesArray[0].bw
+        })
         
-//        let
+        UIView.transition(with: self.rightImageView,
+                              duration: duration,
+                              options: .transitionCrossDissolve,
+                              animations: { [weak self] in
+                                self?.rightImageView.image = self?.imagesArray[2].color
+        }) { [weak self] (_) in
+            let lastImage = self?.imagesArray.removeLast() ?? (nil, nil)
+            self?.imagesArray.insert(lastImage, at: 0)
+        }
         
-        UIView.animate(withDuration: 1, animations: { [weak self] in
-//        let this = self
+//        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: .curveEaseInOut, animations: { [weak self] in
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration / 2) { [weak self] in
             guard let this = self else { return }
+            this.view.bringSubviewToFront(this.frontImageView)
+            this.view.bringSubviewToFront(this.rightImageView)
+        }
             
-            
-//            let leftImagePosition = this.leftImageView.center
-        
+        UIView.animate(withDuration: duration, animations: { [weak self] in
+            guard let this = self else { return }
+       
             // Front image to left
-//            this.frontImageView.frame = leftImageFrame
             this.frontImageView.transform = this.leftImageView.transform
             
             // Left image to right
-//            this.leftImageView.frame = rightImageFrame
             this.leftImageView.transform = this.rightImageView.transform
             
-            // Right image to fromt
-//            this.rightImageView.frame = frontImageFrame
-            
+            // Right image to front
             this.rightImageView.transform = .identity
             
-            this.view.bringSubviewToFront(this.rightImageView)
+//            this.view.bringSubviewToFront(this.rightImageView)
             
         }) { [weak self] (_) in
-    
-            sender.isEnabled = true
-            
+
             guard let this = self else { return }
-        
+            
+            
+            
             let leftImageViewTmp = this.leftImageView
             this.leftImageView = this.frontImageView
             this.frontImageView = this.rightImageView
             this.rightImageView = leftImageViewTmp
             
+            sender.isEnabled = true
+//            let firstImage = self?.imagesArray.removeFirst() ?? (nil, nil)
+//            self?.imagesArray.append(firstImage)
+
+//            let lastImage = self?.imagesArray.removeLast() ?? (nil, nil)
+//            self?.imagesArray.insert(lastImage, at: 0)
         }
     }
 }
