@@ -209,32 +209,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f6m-At-mVi">
-                                <rect key="frame" x="87.5" y="80" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="fab-km-eeV"/>
-                                    <constraint firstAttribute="width" secondItem="f6m-At-mVi" secondAttribute="height" multiplier="1:1" id="zaj-sk-Dhg"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l4y-DH-e6T">
-                                <rect key="frame" x="170.5" y="296" width="34" height="30"/>
+                                <rect key="frame" x="170.5" y="265" width="34" height="30"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="onStartTap:" destination="HlD-bS-azG" eventType="touchUpInside" id="O76-hW-aeZ"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="494-BU-6mH">
+                                <rect key="frame" x="103" y="80" width="169" height="169"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="494-BU-6mH" secondAttribute="height" multiplier="1:1" id="stD-6C-nni"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w8p-Za-BaU">
+                                <rect key="frame" x="103" y="80" width="169" height="169"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="w8p-Za-BaU" secondAttribute="height" multiplier="1:1" id="hyn-qN-D5s"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f6m-At-mVi">
+                                <rect key="frame" x="103" y="80" width="169" height="169"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="f6m-At-mVi" secondAttribute="height" multiplier="1:1" id="zaj-sk-Dhg"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="494-BU-6mH" firstAttribute="width" secondItem="f6m-At-mVi" secondAttribute="width" id="ATk-6h-Nok"/>
+                            <constraint firstItem="w8p-Za-BaU" firstAttribute="centerX" secondItem="f6m-At-mVi" secondAttribute="centerX" id="GG4-c4-aoh"/>
                             <constraint firstItem="l4y-DH-e6T" firstAttribute="centerX" secondItem="f6m-At-mVi" secondAttribute="centerX" id="OQF-b6-dgs"/>
                             <constraint firstItem="f6m-At-mVi" firstAttribute="top" secondItem="SEv-da-s9v" secondAttribute="top" constant="16" id="TlU-e6-Hmb"/>
                             <constraint firstItem="l4y-DH-e6T" firstAttribute="top" secondItem="f6m-At-mVi" secondAttribute="bottom" constant="16" id="XaR-7A-k4z"/>
+                            <constraint firstItem="w8p-Za-BaU" firstAttribute="width" secondItem="f6m-At-mVi" secondAttribute="width" id="fsR-J6-j2l"/>
+                            <constraint firstItem="494-BU-6mH" firstAttribute="centerX" secondItem="f6m-At-mVi" secondAttribute="centerX" id="gRX-c7-B9F"/>
+                            <constraint firstItem="f6m-At-mVi" firstAttribute="width" secondItem="AlP-0P-m6E" secondAttribute="width" multiplier="0.45" id="u3F-hS-EZo"/>
                             <constraint firstItem="f6m-At-mVi" firstAttribute="centerX" secondItem="SEv-da-s9v" secondAttribute="centerX" id="wHw-Id-HeS"/>
+                            <constraint firstItem="494-BU-6mH" firstAttribute="centerY" secondItem="f6m-At-mVi" secondAttribute="centerY" id="ycn-tZ-F1d"/>
+                            <constraint firstItem="w8p-Za-BaU" firstAttribute="centerY" secondItem="f6m-At-mVi" secondAttribute="centerY" id="zIS-rx-YEQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SEv-da-s9v"/>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="f6m-At-mVi" id="MXO-GJ-nQm"/>
+                        <outlet property="frontImageView" destination="f6m-At-mVi" id="MXO-GJ-nQm"/>
+                        <outlet property="leftImageView" destination="494-BU-6mH" id="DAw-4b-Byo"/>
+                        <outlet property="rightImageView" destination="w8p-Za-BaU" id="d9u-dE-6eS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cW3-hQ-Zc5" userLabel="First Responder" sceneMemberID="firstResponder"/>
